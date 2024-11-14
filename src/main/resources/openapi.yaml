@@ -1,0 +1,464 @@
+openapi: 3.0.3
+info:
+  title: Conference API - OpenAPI 3.0
+  description: |-
+    Essa é uma pequena demostração de uma API RESTful para gerenciamento de conferências.
+  termsOfService: http://
+  contact:
+    email: andersonbcdev@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: lecture
+    description: Operations about lectures
+    externalDocs:
+      description: Find out more about
+      url: http://swagger.io
+  - name: speaker
+    description: Operations about speakers
+    externalDocs:
+      description: Find out more about
+      url: http://swagger.io
+  - name: conference
+    description: Operations about conferences
+    externalDocs:
+      description: Find out more about
+      url: http://swagger.io
+paths:
+  /lectures:
+    put:
+      tags:
+        - lecture
+      summary: Update an existing lecture
+      description: Update an existing lecture by Id
+      operationId: updateLecture
+      requestBody:
+        description: Update an existent lecture
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LectureRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LectureResponse'          
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Lecture not found
+        '422':
+          description: Validation exception
+      security:
+        - api_key: []
+    post:
+      tags:
+        - lecture
+      summary: Add a new lecture
+      description: Add a new lecture
+      operationId: addLecture
+      requestBody:
+        description: Create a new lecture
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LectureRequest'
+          
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LectureResponse'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+      security:
+        - api_key: []
+  /lectures/{lectureId}:
+    get:
+      tags:
+        - lecture
+      summary: Find lecture by ID
+      description: Returns a single lecture
+      operationId: getLectureById
+      parameters:
+        - name: lectureId
+          in: path
+          description: ID of lecture to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LectureResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Lecture not found
+      security:
+        - api_key: []
+    delete:
+      tags:
+        - lecture
+      summary: Deletes a lecture
+      description: delete a lecture
+      operationId: deleteLecture
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: lectureId
+          in: path
+          description: Lecture id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Lecture deleted
+        '400':
+          description: Invalid pet value
+      security:
+        - api_key: []
+  /speakers:
+    put:
+      tags:
+        - speaker
+      summary: Update an existing speaker
+      description: Update an existing speaker by Id
+      operationId: updateSpeaker
+      requestBody:
+        description: Update an existent speaker
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpeakerRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpeakerResponse'          
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Speaker not found
+        '422':
+          description: Validation exception
+      security:
+        - api_key: []
+    post:
+      tags:
+        - speaker
+      summary: Add a new speaker
+      description: Add a new speaker
+      operationId: addSpeaker
+      requestBody:
+        description: Create a new speaker
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpeakerRequest'
+          
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpeakerResponse'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+      security:
+        - api_key: []
+  /speakers/{speakerId}:
+    get:
+      tags:
+        - speaker
+      summary: Find speaker by ID
+      description: Returns a single speaker
+      operationId: getSpeakerById
+      parameters:
+        - name: speakerId
+          in: path
+          description: ID of speaker to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpeakerResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Speaker not found
+      security:
+        - api_key: []
+    delete:
+      tags:
+        - speaker
+      summary: Deletes a speaker
+      description: delete a speaker
+      operationId: deleteSpeaker
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: speakerId
+          in: path
+          description: Speaker id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Speaker deleted
+        '400':
+          description: Invalid pet value
+      security:
+        - api_key: []
+  /conferences:
+    put:
+      tags:
+        - conference
+      summary: Update an existing conference
+      description: Update an existing conference by Id
+      operationId: updateConference
+      requestBody:
+        description: Update an existent conference
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConferenceRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConferenceResponse'          
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Conference not found
+        '422':
+          description: Validation exception
+      security:
+        - api_key: []
+    post:
+      tags:
+        - conference
+      summary: Add a new conference
+      description: Add a new conference
+      operationId: addConference
+      requestBody:
+        description: Create a new conference
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConferenceRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConferenceResponse'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+      security:
+        - api_key: []
+  /conferences/{conferenceId}:
+    get:
+      tags:
+        - conference
+      summary: Find conference by ID
+      description: Returns a single conference
+      operationId: getConferenceById
+      parameters:
+        - name: conferenceId
+          in: path
+          description: ID of conference to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConferenceResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Conference not found
+      security:
+        - api_key: []
+    delete:
+      tags:
+        - conference
+      summary: Deletes a conference
+      description: delete a conference
+      operationId: deleteConference
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: conferenceId
+          in: path
+          description: Conference id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Conference deleted
+        '400':
+          description: Invalid conference value
+      security:
+        - api_key: []
+components:
+  schemas:
+    SpeakerRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Anderson Botelho
+        age:
+          type: integer
+          example: 31
+        email:
+          type: string
+          example: andersonbcdev@gmail.com
+        company:
+          type: string
+          example: Company
+    SpeakerResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Anderson Botelho
+        age:
+          type: integer
+          example: 31
+        email:
+          type: string
+          example: andersonbcdev@gmail.com
+        company:
+          type: string
+          example: Company
+    LectureRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Java 8
+        description:
+          type: string
+          example: Java 8 new features
+        date:
+          type: string
+          format: date-time
+          example: 2024-11-16T14:45:00Z
+        speakerId:
+          type: integer
+          format: int64
+          example: 1
+    LectureResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        title:
+          type: string
+          example: Java 8
+        description:
+          type: string
+          example: Java 8 new features
+        date:
+          type: string
+          format: date-time
+          example: 2024-11-16T14:45:00Z
+        speaker:
+          $ref: '#/components/schemas/SpeakerResponse'
+    ConferenceRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Conferencia Java
+        lectureIds:
+            type: array
+            items:
+              type: integer
+              format: int64
+    ConferenceResponse:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Conferencia Java
+        lectures:
+            type: array
+            items:
+              $ref: '#/components/schemas/LectureResponse'
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
